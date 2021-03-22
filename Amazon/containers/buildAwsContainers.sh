@@ -5,9 +5,9 @@ EDITIONS=( artifactory-pro artifactory-jcr )
 #for loop start: editoins
 for EDITION in "${EDITIONS[@]}"
 do
-  UPSTREAM_IMAGE_NAME=docker.bintray.io/jfrog/$EDITION
-  BUILD_IMAGE_NAME=partnership-public-images.jfrog.io/aws/$EDITION
-  ARTIFACTORY_PASSWORD=corona1831
+  UPSTREAM_IMAGE_NAME=releases-docker.jfrog.io/jfrog/$EDITION
+  BUILD_IMAGE_NAME=709825985650.dkr.ecr.us-east-1.amazonaws.com/jfrog/$EDITION
+  ARTIFACTORY_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 12 | head -n 1)
 
   # Logic starts here
   if [ -z "$VERSION" ]
@@ -30,7 +30,7 @@ do
   then
     cat <<EOF > installer-info.json
     {
-      "productId": "CloudFormation_artifactory-ha/$VERSION",
+      "productId": "container_artifactory-ha/$VERSION",
       "features": [
         {
           "featureId": "Partner/ACC-006973"
@@ -41,7 +41,7 @@ EOF
   else
     cat <<EOF > installer-info.json
     {
-      "productId": "CloudFormation_artifactory-jcr/$VERSION",
+      "productId": "container_artifactory-jcr/$VERSION",
       "features": [
         {
           "featureId": "Partner/ACC-006973"
